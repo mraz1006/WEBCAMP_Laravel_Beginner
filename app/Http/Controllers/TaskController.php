@@ -3,21 +3,42 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TaskRegisterPostRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Task as TaskModel;
 
 class TaskController extends Controller
 {
     /**
-     * トップページ を表示する
+     * タスク一覧ページ を表示する
      *
      * @return \Illuminate\View\View
      */
     public function list()
     {
-        return view('task.list');
+        // 1Page辺りの表示アイテム数を設定
+        $per_page = 2;
+
+        // 一覧の取得
+        $list = TaskModel::where('user_id', Auth::id())
+                         ->orderBy('priority', 'DESC')
+                         ->orderBy('period')
+                         ->orderBy('created_at')
+                         ->paginate($per_page);
+                        // ->get();
+/*
+$sql = TaskModel::where('user_id', Auth::id())
+                 ->orderBy('priority', 'DESC')
+                 ->orderBy('period')
+                 ->orderBy('created_at')
+                 ->toSql();
+//echo "<pre>\n"; var_dump($sql, $list); exit;
+var_dump($sql);
+*/
+        //
+        return view('task.list', ['list' => $list]);
     }
+
     /**
      * タスクの新規登録
      */
