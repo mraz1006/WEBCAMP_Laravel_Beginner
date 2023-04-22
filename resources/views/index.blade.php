@@ -3,6 +3,10 @@
 {{-- メインコンテンツ --}}
 @section('contets')
         <h1>ログイン</h1>
+        @if (session('front.user_register_success') == true)
+                会員登録しました！！<br>
+        @endif
+
         @if ($errors->any())
             <div>
             @foreach ($errors->all() as $error)
@@ -16,4 +20,5 @@
             パスワード：<input  name="password" type="password"><br>
             <button>ログインする</button>
         </form>
+         <a href="/register">会員登録</a><br>
 @endsection

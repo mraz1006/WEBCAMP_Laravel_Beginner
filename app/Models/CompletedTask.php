@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompletedTask extends Model
+class CompletedTask extends \App\Models\Task
 {
     use HasFactory;
 
@@ -13,4 +13,5 @@ class CompletedTask extends Model
      * 複数代入不可能な属性
      */
     protected $guarded = [];
+
 }
